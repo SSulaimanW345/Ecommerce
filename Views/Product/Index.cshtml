@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<link rel="stylesheet" href="/css/product-page.css">
+
+@if (@TempData["Success"] != null && !String.IsNullOrEmpty((string)@TempData["Success"]))
+{
+    <div class="alert alert-info alert-dismissible" style="position:absolute;width:max-content;z-index:99;margin:2px 30%" role="alert">
+        @TempData["Success"]
+        <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="text-center">
+    <h2 class="display-4">Browse Our Products</h2>
+</div>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p class="text-center mt-5">
+            Search by Category: <input type="text" name="SearchString" value="@ViewData[" CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-outline-primary" /> 
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+
+<div class="container d-flex justify-content-center mt-50 mb-50">
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-img-actions">
+                            <img src="@item.ProductImgURL" class="card-img img-fluid" width="96" height="350" alt="">
+                        </div>
+                    </div>
+
+                    <div class="card-body bg-light text-center">
+                        <div class="mb-2">
+                            <h6 class="font-weight-semibold mb-2">
+                                <a href="#" class="text-default mb-2" data-abc="true">@item.ProductName</a>
+                            </h6>
+
+                            <a href="#" class="text-muted" data-abc="true">@item.Description</a>
+                        </div>
+
+                        <h3 class="mb-0 font-weight-semibold">@item.ProductPrice</h3>
+
+                        <div class="text-muted mb-3">34 reviews</div>
+
+                        <form asp-controller="Product" asp-action="AddToCart" method="post" asp-route-id="@item.ProductID" ><button type="submit" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i>Add to cart</button></form>
+
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        }
+    </div>
+
+</div>

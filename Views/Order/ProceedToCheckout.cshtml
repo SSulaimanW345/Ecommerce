@@ -1,0 +1,161 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using ecommerce_website_simple.ViewModels.OrderSummary 
+@model OrderSummary
+@if (@TempData["Error"] != null && !String.IsNullOrEmpty((string)@TempData["Error"]))
+    {
+        <div class="alert alert-info alert-dismissible" style="position:absolute;width:max-content;z-index:99;margin:2px 30%" role="alert">
+            @TempData["Error"]
+            <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    @if (@TempData["Success"] != null && !String.IsNullOrEmpty((string)@TempData["Success"]))
+    {
+        <div class="alert alert-info alert-dismissible" style="position:absolute;width:max-content;z-index:99;margin:2px 30%" role="alert">
+            @TempData["Success"]
+            <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+<div class="text-center">
+    <h2 class="display-4">Complete your Order</h2>
+</div>
+<div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill">@Model.CartItems.Count</span>
+        </h4>
+        <ul class="list-group mb-3">
+            @foreach (var item in Model.CartItems)
+            {
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">@item.Product.ProductName</h6>
+                        <small class="text-muted">@item.Product.Description</small>
+                        <div><p class="text-muted"><b>Quantity</b> @item.Quantity</p></div>
+                    </div>
+                    <span class="text-muted"></span>
+                </li>
+            }
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Sub Total %</span>
+                    <strong>@Model.SubTotal.ToString("C2")</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Tax %</span>
+                    <strong>@Model.Tax</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>@Model.Total.ToString("C2")</strong>
+                </li>
+            </ul>
+
+        
+    </div>
+    <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Billing address</h4>
+        <form class="needs-validation" novalidate="" asp-controller="Order" asp-action="PlaceOrder">
+            
+                <div class="mb-3">
+                    <label for="firstName">First name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" asp-for="@Model.Fullname" value="" required="">
+                    <span asp-validation-for="@Model.Fullname" class="text-danger"></span>
+                    <div class="invalid-feedback">
+                        Valid first name is required.
+                    </div>
+                </div>
+          
+
+            <div class="mb-3">
+                <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                <input type="email" class="form-control" id="email" asp-for="@Model.Email" placeholder="you@example.com">
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                <div class="invalid-feedback">
+                    Valid email  is required.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="address2">Address  <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="address2" asp-for="@Model.Address.AddressDescription" placeholder="Apartment or suite">
+                <span asp-validation-for="@Model.Address.AddressDescription" class="text-danger"></span>
+                <div class="invalid-feedback">
+                    Valid address is required.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label for="country">Country</label>
+                    <select class="custom-select d-block w-100" asp-for="@Model.Address.Country" id="country" required="">
+                        <option value="">Choose...</option>
+                        <option value="Pakistan">Pakistan</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Valid Country name is required.
+                    </div>
+                    <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="state">State</label>
+                    <select class="custom-select d-block w-100" id="state" asp-for="@Model.Address.State" required="">
+                        <option value="">Choose...</option>
+                        <option value="Karachi">Karachi</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Valid State name is required.
+                    </div>
+                    <span asp-validation-for="@Model.Address.State" class="text-danger"></span>
+                </div>
+            </div>
+        
+            <hr class="mb-4">
+
+            <h4 class="mb-3">Payment</h4>
+
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="credit" name="paymentMethod" value="credit" asp-for="@Model.PaymentType" type="radio" class="custom-control-input" checked="" required="">
+                    <label class="custom-control-label" for="credit">Credit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="debit" name="paymentMethod" value="debit" asp-for="@Model.PaymentType" type="radio" class="custom-control-input" required="">
+                    <label class="custom-control-label" for="debit">Debit card</label>
+
+                </div>
+                <span asp-validation-for="@Model.PaymentType" class="text-danger"></span>
+                <div class="invalid-feedback">
+                    Valid payment type is required.
+                </div>
+            </div>
+            
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Place Order</button>
+        </form>
+    </div>
+</div>
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+</script>

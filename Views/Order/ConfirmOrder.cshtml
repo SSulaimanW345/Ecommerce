@@ -1,0 +1,104 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using ecommerce_website_simple.ViewModels.OrderSummary
+@model OrderSummary
+<div class="text-center">
+    <h2 class="display-4">Confirm order</h2>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Billing Details</div>
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Fullname :</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.Fullname</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Email :</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.Email</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Address :</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.Address.AddressDescription, @Model.Address.State ,@Model.Address.Country   </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Payment type:</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.PaymentType</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Number of products:</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.CartItems.Count</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Sub Total :</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.SubTotal</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Tax :</label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.Tax</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-6 col-form-label text-md-right">Total amount: </label>
+                        <div class="col-md-6">
+                            <label class="col-form-label">@Model.Total</label>
+                        </div>
+                    </div>
+                    <div class="p-2 text-center">
+                        <button class="btn btn-primary p-2">PlaceOrder</button>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                   Products
+                </div>
+                <div class="card-body">
+
+                    @foreach (var Item in Model.CartItems)
+                    {
+                    <div class="card" style="width:400px">
+
+                        <img class="card-img-top" src="@Item.Product.ProductImgURL" alt="" />
+                        <div class="card-body">
+                            <h4 class="card-title">@Item.Product.ProductName</h4>
+                            <p>
+                                Price:  @Item.Product.ProductPrice
+                            </p>
+                            <p>
+                                Quantity:  @Item.Quantity
+                            </p>
+                        </div>
+                    </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

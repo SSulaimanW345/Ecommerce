@@ -1,0 +1,123 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using ecommerce_website_simple.ViewModels.ShoppingCart;
+@model CartViewModel
+
+@if (@TempData["Success"] != null && !String.IsNullOrEmpty((string)@TempData["Success"]))
+{
+    <div class="alert alert-info alert-dismissible" style="position:absolute;width:max-content;z-index:99;margin:2px 30%" role="alert">
+        @TempData["Success"]
+        <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (@TempData["Error"] != null && !String.IsNullOrEmpty((string)@TempData["Error"]))
+{
+    <div class="alert alert-info alert-dismissible" style="position:absolute;width:max-content;z-index:99;margin:2px 30%" role="alert">
+        @TempData["Error"]
+        <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="text-center">
+    <h1 class="display-4">View Your Cart</h1>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Cart Items
+                </div>
+                <div>
+                    @if (Model.CartItems.Count != 0)
+                    {
+                        <div>
+                            <ul class="list-group shadow">
+                                @foreach (var Item in Model.CartItems)
+                                {
+                                    <li class="list-group-item">
+
+                                        <div class="media align-items-lg-center flex-column flex-lg-row">
+                                            <img src="@Item.Product.ProductImgURL" alt="Generic placeholder image" width="250" height="200" class="order-1 order-lg-1">
+
+                                            <div class="media-body order-2 order-lg-2 ml-lg-5">
+                                                <h5 class="mt-0 mb-1">@Item.Product.ProductName</h5>
+                                                <h5 class="mt-0 mb-1"> Quantity:  @Item.Quantity</h5>
+                                                <span class="product_price price-new">@Item.Product.ProductPrice USD </span>
+                                                <hr class="mb-2 mt-1 seperator">
+                                                <a class="btn btn-primary btn-sm m-2" style="width:50px" asp-action="AddToCart" asp-route-id="@Item.Product.ProductID">+</a>
+                                                <a class="btn btn-info btn-sm  m-2" style="width:50px" asp-action="RemoveFromCart" asp-route-id="@Item.Product.ProductID">-</a>
+                                                <a class="btn btn-danger btn-sm  m-2" asp-action="RemoveAll" asp-route-id="@Item.Product.ProductID">Delete</a>
+
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-body">
+                            <div class="text-center">
+                                <p class="p-5">You have no items in your Cart!</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Cart Summary</div>
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-8 col-form-label text-md-center">Number of products:</label>
+                        <div class="col-md-4">
+                            <label class="col-form-label">@Model.CartItems.Count</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-8 col-form-label text-md-center">Sub Total :</label>
+                        <div class="col-md-4">
+                            <label class="col-form-label">@Model.SubTotal.ToString("C2")</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-8 col-form-label text-md-center">Tax :</label>
+                        <div class="col-md-4">
+                            <label class="col-form-label">@Model.Tax</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-8 col-form-label text-md-center">Total amount: </label>
+                        <div class="col-md-4">
+                            <label class="col-form-label">@Model.Total.ToString("C2")</label>
+                        </div>
+                    </div>
+                    <div class="p-2 text-center">
+                        <a class="btn btn-primary p-2" asp-controller="Order" asp-action="ProceedToCheckout">Proceed to Checkout</a>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
