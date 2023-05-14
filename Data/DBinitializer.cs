@@ -19,7 +19,7 @@ namespace ecommerce_website_simple.Data
             
             string[] roleNames = {"Admin", "User"};
             IdentityResult roleResult;
-
+            //Adding two roles to database, can add more roles 
             foreach (var roleName in roleNames)
             {
                 var roleExist = await RoleManager.RoleExistsAsync(roleName);
@@ -29,6 +29,7 @@ namespace ecommerce_website_simple.Data
                 }
             }
             await dbContext.SaveChangesAsync();
+            //Creating three product categories 
             var categoryLaptop = new ProductCategory
             {
                 CategoryID = 1,
@@ -50,14 +51,15 @@ namespace ecommerce_website_simple.Data
                 CategoryDescription = "Headphones, speakers, and other audio equipment"
             };
 
-
+            //Creating 3 products for testing 
+            //Note: Image urls same for all while testing
             dbContext.ProductCategories.AddRange(categoryLaptop, categoryAudio, categorySmartphones);
             await dbContext.SaveChangesAsync();
             var products = new List<Product>
             {
                 new Product { ProductName = "Laptop", Description = "A high-performance laptop for gaming and productivity", ProductPrice = 999.99, StockQuantity = 50, ProductImgURL = "/images/LaptopImage.jfif", Category = categoryLaptop },
-                new Product { ProductName = "Smartphone", Description = "A powerful smartphone with a high-quality camera", ProductPrice = 599.99, StockQuantity = 100, ProductImgURL = "/images/Smartphone.jfif", Category = categorySmartphones },
-                new Product { ProductName = "Headphones", Description = "Noise-cancelling headphones for an immersive audio experience", ProductPrice = 249.99, StockQuantity = 25, ProductImgURL = "/images/Speaker.jfif", Category = categoryAudio },
+                new Product { ProductName = "Smartphone", Description = "A powerful smartphone with a high-quality camera", ProductPrice = 599.99, StockQuantity = 100, ProductImgURL = "/images/LaptopImage.jfif", Category = categorySmartphones },
+                new Product { ProductName = "Headphones", Description = "Noise-cancelling headphones for an immersive audio experience", ProductPrice = 249.99, StockQuantity = 25, ProductImgURL = "/images/LaptopImage.jfif", Category = categoryAudio },
                 //new Product { productName = "Smartwatch", Description = "A stylish smartwatch with fitness tracking and GPS capabilities", productPrice = 199.99, stockQuantity = 75, productImgURL = "https://example.com/smartwatch.jpg", category = 4 },
                 //new Product { productName = "TV", Description = "A high-resolution TV with smart features and voice control", productPrice = 1499.99, stockQuantity = 10, productImgURL = "https://example.com/tv.jpg", category = 5 },
                 //new Product { productName = "Wireless Speakers", Description = "Wireless speakers with 360-degree sound for an immersive audio experience", productPrice = 349.99, stockQuantity = 40, productImgURL = "https://example.com/wireless-speakers.jpg", CategoryID = 3 },
@@ -68,6 +70,12 @@ namespace ecommerce_website_simple.Data
             };
             dbContext.AddRange(products);
             await dbContext.SaveChangesAsync();
+            
+            // Adding Two Users: 1 in USER role and 2 in ADMIN role
+            //You can only use this ADMIN user to log into ADMIN panel
+            //The credentials are:
+            //username:exampleAdmin@gmail.com
+            //password:admin123
 
             ApplicationUser applicationAdmin = await UserManager.FindByEmailAsync("exampleAdmin@gmail.com");
 

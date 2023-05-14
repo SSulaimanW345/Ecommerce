@@ -22,12 +22,15 @@ namespace ecommerce_website_simple.Areas.Admin.Controllers
             _dbcontext = DBcontext;
             _signInManager = signInManager;
         }
+        //Controller returns the List of Users signed up and using the application
         public async Task<IActionResult> Index()
         {
             var users =_dbcontext.Users.ToList();
             return View(users);
 
         }
+
+        //This controller returns LIST OF ORDERS
         public async Task<IActionResult>Orders()
         {
             var orders = await _dbcontext.Orders.ToListAsync();
@@ -39,6 +42,7 @@ namespace ecommerce_website_simple.Areas.Admin.Controllers
             }
             return View(orders);
         }
+        //This controller allows ONLY ADMIN to signout
         public async Task<RedirectResult> SignOut(string returnUrl = "/")
         {
             await _signInManager.SignOutAsync();

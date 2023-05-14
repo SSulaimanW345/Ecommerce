@@ -18,7 +18,8 @@ namespace ecommerce_website_simple.Controllers
         { 
             _dbcontext = dbcontext;
         }
-
+        //Controller to DISPLAY PRODUCTS based on SearchString
+        //Copied from DOCUMENTATION
         public async Task<IActionResult> Index(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
@@ -33,6 +34,7 @@ namespace ecommerce_website_simple.Controllers
             
             return View(await products.AsNoTracking().ToListAsync());
         }
+        //Adds ITEMS to CART when user in on PRODUCT PAGE.
         [HttpPost]
         public async Task<IActionResult> AddToCart(string id)
         {

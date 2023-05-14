@@ -18,6 +18,8 @@ namespace ecommerce_website_simple.Models
         {
             base.OnConfiguring(optionsBuilder);
         }
+
+        //List of SCHEMAS in the database
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }

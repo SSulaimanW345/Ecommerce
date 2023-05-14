@@ -18,7 +18,7 @@ namespace ecommerce_website_simple.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
         }
-
+        
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
@@ -27,6 +27,8 @@ namespace ecommerce_website_simple.Controllers
         {
             return View(new SignInViewModel{ ReturnUrl = returnUrl });
         }
+        //Registering new user
+        //Note: have not implemented AnitForgery
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel register)
         {
@@ -51,6 +53,8 @@ namespace ecommerce_website_simple.Controllers
             }
             return RedirectToAction("SignIn");
         }
+        //logging in exsiting user
+        //Note: have not implemented AnitForgery
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInViewModel signin)
         {
@@ -82,7 +86,7 @@ namespace ecommerce_website_simple.Controllers
         {
             return View();
         }
-       
+       //User signing out, not ADMIN signout
         public async Task<RedirectResult> SignOut(string returnUrl = "/")
         {
             await _signInManager.SignOutAsync();

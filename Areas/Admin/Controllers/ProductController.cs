@@ -18,6 +18,7 @@ namespace ecommerce_website_simple.Areas.Admin.Controllers
         {
             _dbcontext = dbcontext;
         }
+        //Controller returns products based on QUERY STRING
         public async Task<IActionResult> Index(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;

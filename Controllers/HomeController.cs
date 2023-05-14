@@ -23,7 +23,7 @@ namespace ecommerce_website_simple.Controllers
             _dbcontext = DBcontext;
             _userManager = userManager;
         }
-        
+        //Controller to display Different Index Pages According to User ROLE
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -44,6 +44,7 @@ namespace ecommerce_website_simple.Controllers
         //    return RedirectToAction("Index", "Home", new { area = "Admin" });
 
         //}
+        //Displays logged in USERDASHBOARD -> This is the index page for USER role. 
         [Authorize(Roles = "User")]
         public async Task<IActionResult> UserDashBoard()
         {

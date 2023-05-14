@@ -16,7 +16,7 @@ namespace ecommerce_website_simple.Controllers
         {
             _dbcontext = context;
         }
-
+        //Controller to display Users CART and CART summary
         public IActionResult Index()
         {
             List<CartItem> CartItems = HttpContext.Session.Get<List<CartItem>>("Cart") ?? new List<CartItem>();
@@ -31,7 +31,8 @@ namespace ecommerce_website_simple.Controllers
 
             return View(CartVM);
         }
-
+        //ADD items to Cart when user on CART page
+        //Note = AJAX not implemented YET !
         public async Task<IActionResult> AddToCart(string id)
         {
             Product product = await _dbcontext.Products.FindAsync(id);
@@ -59,7 +60,8 @@ namespace ecommerce_website_simple.Controllers
 
             return RedirectToAction("Index","Cart");
         }
-
+        //Controller to remove items from Cart
+        //Note = AJAX not implemented YET !
         public async Task<IActionResult>RemoveFromCart(string id)
         {
             List<CartItem> cart = HttpContext.Session.Get<List<CartItem>>("Cart");
@@ -88,7 +90,8 @@ namespace ecommerce_website_simple.Controllers
 
             return RedirectToAction("Index");
         }
-
+        //Controller to EMPTY CART
+        //Create a new CART SESSION
         public async Task<IActionResult>RemoveAll(string id)
         {
             List<CartItem> cart = HttpContext.Session.Get<List<CartItem>>("Cart");
@@ -108,7 +111,8 @@ namespace ecommerce_website_simple.Controllers
 
             return RedirectToAction("Index");
         }
-
+        //Controller to EMPTY CART
+        //Removes CART from SESSION
         public IActionResult Clear()
         {
             HttpContext.Session.Remove("Cart");

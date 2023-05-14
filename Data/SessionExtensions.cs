@@ -5,7 +5,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 namespace ecommerce_website_simple.Data
-{
+{   
+    //This class methods is added to provide for Cart manipulation from Session Storage
     public static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)

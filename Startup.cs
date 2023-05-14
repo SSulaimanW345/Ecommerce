@@ -23,8 +23,11 @@ namespace ecommerce_website_simple
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
+
+            //Using MYSQL version 8
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 25));
+            //Injecting MYSQL into service container
             services.AddDbContext<ApplicationDbContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(Configuration.GetConnectionString("DefaultConnection"), serverVersion)
@@ -69,7 +72,7 @@ namespace ecommerce_website_simple
             app.UseSession();
 
             app.UseEndpoints(endpoints =>
-            {
+            {   //Defining a custom route because I have created a folder called "Areas" in the root directory
                 endpoints.MapControllerRoute(
                     name: "Areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

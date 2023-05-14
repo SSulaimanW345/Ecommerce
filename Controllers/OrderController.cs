@@ -22,7 +22,7 @@ namespace ecommerce_website_simple.Controllers
             _userManager = userManager;
             _dbcontext = dbcontext;
         }
-
+        //Controller returns ORDERSUMMARYVM View as user will fill in order details . 
         public async Task<IActionResult>ProceedToCheckout()
         {
             
@@ -42,7 +42,7 @@ namespace ecommerce_website_simple.Controllers
             };
             return View(OrderSummaryVM);
         }
-        
+        //Controller to add confirm order, validate and add entry to DATABASE + empty CART.
         public async Task<IActionResult> PlaceOrder(OrderSummary orderVM)
         {
             List<CartItem> CartItems = HttpContext.Session.Get<List<CartItem>>("Cart");
